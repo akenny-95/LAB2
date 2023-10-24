@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Login( {setUser} ) {
+export default function Login( {dispatchUser} ) {
     const [username, setUsername] = useState(""); 
 
     function handleUsername (evt) { setUsername(evt.target.value) } 
@@ -8,7 +8,8 @@ export default function Login( {setUser} ) {
     return (
         <form onSubmit={ (e) =>{ 
              e.preventDefault()
-             setUser(username);
+             dispatchUser({type: "LOGIN", username});
+             document.getElementById('createTodo').style.display="block";
             }}>           
             <label htmlFor="login-username">Username: </label>
             <input 

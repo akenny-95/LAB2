@@ -1,9 +1,10 @@
 
-export default function Logout({user, setUser}) {
+export default function Logout({user, dispatchUser}) {
     return (
         <form onSubmit={ (e) => {
             e.preventDefault();
-            setUser("");
+            dispatchUser({type: "LOGIN"});
+            document.getElementById('createTodo').style.display="none";
         }}>
         Logged in as: <b>{user}</b>
 

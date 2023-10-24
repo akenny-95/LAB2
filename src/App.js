@@ -1,7 +1,7 @@
 import UserBar from "./UserBar";
 import CreateTodo from "./CreateTodo";
 import TodoList from "./TodoList";
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 
 function App() {
   const initialTodos = [
@@ -25,17 +25,49 @@ function App() {
     dateCreated: (new Date(Date.now())).toLocaleString()
     },
   ];
-    
-  //utilize State to monitor changes for user and list of Todos
-  const [user, setUser] = useState("");
-  const [todos, setTodos] = useState(initialTodos);
 
-  const handleAddTodo = (newTodo) => { setTodos([newTodo, ...todos]); };
+  function userReducer(state, action) {
+    switch (action.type) {
+      case "LOGIN":
+      case "REGISTER":
+        return action.username;
+      case "LOGOUT":
+        return "";
+      default:
+        return state; 
+    }
+  }
+
+  const [user, dispatchUser] = useReducer(userReducer, "");
+
+  function todoReducer(state, action) {
+    switch (action.type) {
+      case "CREATE_TODO":
+        const newTodo = {
+          title: action.title,
+          description: action.description,
+          author: action.author,
+          complete: false, 
+          dateCreated: (new Date(Date.now())).toLocaleString(),
+        };
+        return [newTodo, ...state];
+      case "TOGGLE_TODO": //TODO - locate spec todo in list, toggle complete field and set datecompleted field 
+        action.dateCompleted = (new Date(Date.now())).toLocaleString();
+        return;
+      case "DELETE_TODO": //TODO - remove spec todo from the list 
+      
+        return;
+      default:
+        return state;
+    }
+  }
+
+  const [todos, dispatchTodo] = useReducer(todoReducer, initialTodos);
 
   return (
     <div>
-      <UserBar user={user} setUser={setUser} />
-      <CreateTodo user={user} handleAddTodo={handleAddTodo} />
+      <UserBar user={user} dispatchUser={dispatchUser} />
+      <CreateTodo user={user} dispatchTodo={dispatchTodo}/> 
       <TodoList todos={todos} />
     </div>
   );

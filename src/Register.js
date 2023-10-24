@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Register( {setUser} ) {
+export default function Register( {dispatchUser} ) {
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -13,7 +13,8 @@ export default function Register( {setUser} ) {
     return (
         <form onSubmit={ (e) => {
              e.preventDefault();
-             setUser(username);
+             dispatchUser({type: "REGISTER", username});
+             document.getElementById('createTodo').style.display="block";
             }}>
 
             <label htmlFor="register-username">Username: </label>

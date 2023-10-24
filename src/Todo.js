@@ -40,7 +40,12 @@ export default function Todo ({ title, description, author, complete, dateCreate
                     Date Created: <b>{dateCreated}</b> <br/> 
                     Date Completed: <b>{dateCompleted}</b> 
                 </i>
-            </div>  
+            </div> 
+
+            <input 
+             type="submit" 
+             value="Delete" 
+            />
         </form>
     );
 }

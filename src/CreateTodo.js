@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function CreateTodo ({user, handleAddTodo}) {
+export default function CreateTodo ({user, dispatchTodo}) {
     const [ title, setTitle ] = useState("");
     const [ description, setDescription ] = useState("");
  
@@ -12,16 +12,20 @@ export default function CreateTodo ({user, handleAddTodo}) {
         
         //required - only call handleAddTodo if a title has been entered 
         if (title) { 
-            handleAddTodo(newTodo);
+            dispatchTodo({type: "CREATE_TODO", ...newTodo});
         }   
     };
 
     return (
-        <form onSubmit={(e) => {
-         e.preventDefault()
-         handleCreate();
-        }}>
-            <div> Author: <b>{user}</b> </div>
+        <form 
+            id="createTodo"
+            onSubmit={(e) => {
+                e.preventDefault()
+                handleCreate();
+            }
+        }>
+            <div>
+                Author: <b>{user}</b> </div>
             <div>
                 <label htmlFor="create-title">Title: </label> 
                 <input 
