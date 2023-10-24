@@ -7,10 +7,8 @@ export default function CreateTodo ({user, dispatchTodo}) {
     function handleTitle (evt) { setTitle(evt.target.value) };
     function handleDescription (evt) { setDescription(evt.target.value) };
     function handleCreate () {
-        const dateCreated = (new Date(Date.now())).toLocaleString();
-        const newTodo = { title, description, author: user, complete: false, dateCreated };
+        const newTodo = { title, description, author: user };
         
-        //required - only call handleAddTodo if a title has been entered 
         if (title) { 
             dispatchTodo({type: "CREATE_TODO", ...newTodo});
         }   
@@ -19,13 +17,13 @@ export default function CreateTodo ({user, dispatchTodo}) {
     return (
         <form 
             id="createTodo"
+            display="none"
             onSubmit={(e) => {
                 e.preventDefault()
                 handleCreate();
             }
         }>
-            <div>
-                Author: <b>{user}</b> </div>
+            <div> Author: <b>{user}</b> </div>
             <div>
                 <label htmlFor="create-title">Title: </label> 
                 <input 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Todo ({ title, description, author, complete, dateCreated, idNum}) {    
+export default function Todo ({todos, title, description, author, complete, dateCreated, idNum, dispatchTodo}) {    
     const [ checkbox, setCheckbox ] = useState("");
     const [ dateCompleted, setDateCompleted ] = useState("");
 
@@ -11,7 +11,11 @@ export default function Todo ({ title, description, author, complete, dateCreate
         if (cb.checked)  {
             complete=true;
             cb.setAttribute("checked", complete);
-            setDateCompleted((new Date(Date.now())).toLocaleString());
+            setDateCompleted(new Date(Date.now()).toLocaleString());
+            /*
+            const thisTodo = {title, description, author, complete, dateCreated, dateCompleted};
+            dispatchTodo({type: "TOGGLE_TODO", ...thisTodo});
+            */
         }
         else {
             complete=false;
@@ -20,8 +24,22 @@ export default function Todo ({ title, description, author, complete, dateCreate
         }
     };
 
+    
+    function handleDelete() {
+        /*
+        todos.toSpliced(idNum, 1);
+        dispatchTodo({type: "DELETE_TODO", ...todos});
+        */
+    };
+
     return (
-        <form> 
+        <form
+            id={idNum}
+            onSubmit={(e) => {
+                e.preventDefault()
+                handleDelete();
+            }
+        }>
             <div>
                 <h3>
                     <input

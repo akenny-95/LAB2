@@ -51,12 +51,29 @@ function App() {
           dateCreated: (new Date(Date.now())).toLocaleString(),
         };
         return [newTodo, ...state];
+      /*
       case "TOGGLE_TODO": //TODO - locate spec todo in list, toggle complete field and set datecompleted field 
-        action.dateCompleted = (new Date(Date.now())).toLocaleString();
-        return;
-      case "DELETE_TODO": //TODO - remove spec todo from the list 
+        const toggledTodo = {
+          title: action.title,
+          description: action.description,
+          author: action.author,
+          complete: action.complete, 
+          dateCreated: action.dateCreated,
+          dateCompleted: action.dateCompleted,
+        };
       
-        return;
+
+        return [toggledTodo, ...state];
+     case "DELETE_TODO": //TODO - remove spec todo from the list 
+        const deletedTodo = {
+          title: action.title,
+          description: action.description,
+          author: action.author,
+          complete: action.complete, 
+          dateCreated: action.dateCreated,
+        };
+        return [action.todos];
+      */
       default:
         return state;
     }
@@ -66,9 +83,9 @@ function App() {
 
   return (
     <div>
-      <UserBar user={user} dispatchUser={dispatchUser} />
+      <UserBar user={user} dispatchUser={dispatchUser}/>
       <CreateTodo user={user} dispatchTodo={dispatchTodo}/> 
-      <TodoList todos={todos} />
+      <TodoList todos={todos} dispatchTodo={dispatchTodo}/>
     </div>
   );
 }

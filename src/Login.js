@@ -11,6 +11,7 @@ export default function Login( {dispatchUser} ) {
              dispatchUser({type: "LOGIN", username});
              document.getElementById('createTodo').style.display="block";
             }}>           
+
             <label htmlFor="login-username">Username: </label>
             <input 
              type="text" 
