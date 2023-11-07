@@ -1,0 +1,57 @@
+{
+  "todos": [
+    {
+      "title": "Testing 1",
+      "description": "Hi there",
+      "author": "Avery",
+      "complete": false,
+      "dateCreated": "11/6/2023, 10:11:07 AM",
+      "dateCompleted": "",
+      "id": 1
+    },
+    {
+      "title": "Testing 1",
+      "description": "blah blah",
+      "author": "Bob",
+      "complete": false,
+      "dateCreated": "08/15/2023, 2:01:11 AM",
+      "dateCompleted": "",
+      "id": 2
+    },
+    {
+      "title": "Test4",
+      "description": "Hello 2",
+      "author": "Avery",
+      "complete": false,
+      "dateCreated": "11/6/2023, 9:41:17 AM",
+      "dateCompleted": "",
+      "id": 5
+    },
+    {
+      "title": "tasfasgfasr",
+      "description": "agssadg",
+      "author": "Avery",
+      "complete": false,
+      "dateCreated": "11/6/2023, 11:59:25 AM",
+      "dateCompleted": "",
+      "id": 7
+    },
+    {
+      "title": "tasfasgfasdggdsadsagfdsafsr",
+      "description": "agssadgsadgfsdg",
+      "author": "Avery",
+      "complete": false,
+      "dateCreated": "11/6/2023, 11:59:27 AM",
+      "dateCompleted": "",
+      "id": 8
+    }
+  ],
+  "users": [],
+  "themes": [
+    {
+      "id": 1,
+      "primaryColor": "deepskyblue",
+      "secondaryColor": "coral"
+    }
+  ]
+}
