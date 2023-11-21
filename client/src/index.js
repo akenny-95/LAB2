@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RequestProvider value={axiosInstance}>
-      <App />
+       <App />
     </RequestProvider>
   </React.StrictMode>
 );

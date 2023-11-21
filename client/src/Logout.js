@@ -8,10 +8,10 @@ export default function Logout() {
     return (
         <form onSubmit={ (e) => {
             e.preventDefault();
-            dispatchUser({type: "LOGIN"});
+            dispatchUser({type: "LOGOUT"});
             document.getElementById('createTodo').style.display="none";
         }}>
-        Logged in as: <b>{user}</b>
+        Logged in as: <b>{user.username}</b>
 
         <input 
          type="submit" 

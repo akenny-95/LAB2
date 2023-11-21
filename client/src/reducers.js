@@ -1,8 +1,10 @@
 function userReducer(state, action) {
     switch (action.type) {
       case "LOGIN":
-      case "REGISTER":
-        return action.username;
+        return {
+          username: action.username,
+          access_token: action.access_token,
+        };
       case "LOGOUT":
         return "";
       default:
@@ -13,19 +15,21 @@ function userReducer(state, action) {
 function todoReducer(state, action) {
     switch (action.type) {
       case "CREATE_TODO":
-        const newTodo = {
+      const newTodo = {
           title: action.title,
           description: action.description,
           author: action.author,
           complete: action.complete, 
           dateCreated: action.dateCreated,
-          dateCompleted: action.dateCompleted
+          dateCompleted: action.dateCompleted,
+          _id: action._id,
         };
         return [newTodo, ...state];
       case "FETCH_TODOS":
+        console.log(action.todos);
         return action.todos;
       case "TOGGLE_TODO": 
-        const tTodos = action.todos; 
+        const tTodos = action.todos.slice(0); 
         const toggledTodo = {
           title: action.title,
           description: action.description,
@@ -33,18 +37,15 @@ function todoReducer(state, action) {
           complete: action.complete, 
           dateCreated: action.dateCreated,
           dateCompleted: action.dateCompleted,
-          id: action.id
+          _id: action._id
         };
-        const toggleIndex = tTodos.indexOf(tTodos.find(todo => todo.id === toggledTodo.id));
+        const toggleIndex = tTodos.indexOf(tTodos.find((todo) => todo._id === toggledTodo._id));
         tTodos[toggleIndex] = toggledTodo;
         return tTodos;
      case "DELETE_TODO": 
-        const dTodos = action.todos; 
-        console.log(dTodos);
-        const thisId = action.id;
-        const deleteIndex = dTodos.indexOf(dTodos.find(todo => todo.id === thisId));
+        const dTodos = action.todos.slice(0); 
+        const deleteIndex = dTodos.indexOf(dTodos.find((todo) => todo._id === action._id));
         dTodos.splice(deleteIndex, 1);
-        console.log(dTodos);
         return dTodos;
       default:
         return state;

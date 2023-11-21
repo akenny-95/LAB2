@@ -1,26 +1,29 @@
-import { useState, useEffect, useContext } from "react";
-import { StateContext } from "./contexts";
+import { useState, useEffect } from "react";
 import { useResource } from "react-request-hook";
 
-export default function Register () {
-    const {dispatch: dispatchUser} = useContext(StateContext);
+export default function Register () {    
+    const [status, setStatus] = useState("");
     
     const [user, register] = useResource((username, password) => ({
-        url: "/users",
+        url: "/auth/register",
         method: "POST",
-        data: {email: username, password}
+        data: {username, password, passwordConfirmation: password}
     }));
 
-    useEffect(() =>{
-        if (user && user.data) {
-            dispatchUser({type:"REGISTER", username: user.data.user.email});
+    useEffect(() => {
+        if (user && user.isLoading === false && (user.data || user.error)) {
+            if (user.error) {
+                setStatus("Registration failed, please try again later.");
+            } else {
+                setStatus("Registration successful. You may now login.")
+            }
         }
-    }, [user, dispatchUser]);
+    }, [user]);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
-    
+
     function handleUsername (evt) {setUsername(evt.target.value)};
     function handlePassword (evt) {setPassword(evt.target.value)};
     function handlePasswordRepeat (evt) {setPasswordRepeat(evt.target.value)};
@@ -28,11 +31,7 @@ export default function Register () {
     return (
         <form onSubmit={ (e) => {
              e.preventDefault();
-             const myUser = (username, password);
-             register(myUser);
-             dispatchUser({type:"REGISTER", username});
-
-             document.getElementById('createTodo').style.display="block";
+             register(username, password);
             }}>
 
             <label htmlFor="register-username">Username: </label>
@@ -71,6 +70,7 @@ export default function Register () {
                 password !== passwordRepeat 
              } 
             />
+            {status &&<p>{status}</p>}
         </form>
     )
 }

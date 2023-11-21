@@ -6,25 +6,27 @@ export default function Login() {
     const [username, setUsername] = useState(""); 
     const [loginFailed, setLoginFailed] = useState(false);
     const [password, setPassword] = useState("");
-    const {dispatch: dispatchUser} = useContext(StateContext);
+
+    const {state, dispatch: dispatchUser} = useContext(StateContext);
 
     const [user, login] = useResource((username, password) => ({
-        url: "/login",
-        method: "POST",
-        data: {email: username, password}
+      url: "/auth/login",
+      method: "POST",
+      headers: { Authorization: `${state.user.access_token}` },
+      data: {username, password}
     }));
-
+    
     useEffect(() => {
-        if (user) {
-            if (user?.data?.user) {
-                setLoginFailed(false);
-                dispatchUser({type: "LOGIN", username: user.data.user.email});     
-                document.getElementById('createTodo').style.display="block";  
-            } else {
-                setLoginFailed(true);
-            }
+        if (user && user.isLoading === false && (user.data || user.error)) {
+          if (user.error) {
+            setLoginFailed(true);
+          } else {
+            setLoginFailed(false);
+            dispatchUser({ type: "LOGIN", username: username,access_token: user.data.access_token });
+            document.getElementById('createTodo').style.display="block";
+          }
         }
-    }, [user, dispatchUser]);
+    }, [user, username, dispatchUser]);
 
     function handlePassword (evt) {setPassword(evt.target.value)};
     function handleUsername (evt) { setUsername(evt.target.value) } 

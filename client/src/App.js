@@ -4,9 +4,9 @@ import UserBar from "./UserBar";
 import CreateTodo from "./CreateTodo";
 import TodoList from "./TodoList";
 import SetDisplay from "./SetDisplay";
-
 import appReducer from "./reducers";
-import { ThemeContext, StateContext } from "./contexts";
+
+import { StateContext } from "./contexts";
 import { useResource } from "react-request-hook";
 
 function App() {
@@ -16,17 +16,24 @@ function App() {
   });
   
   const [todoResponse, getTodos] = useResource(() => ({
-    url: '/todos',
-    method: 'get'
+    url: "/todo",
+    method: "GET",
+    headers: { Authorization: `${state.user.access_token}`},
   }));
 
-  useEffect(getTodos, []);
+  useEffect(() => {
+    getTodos();
+  }, [state.user.access_token]);
 
   useEffect(() => {
-    if (todoResponse && todoResponse.data) { 
-      dispatch({type: "FETCH_TODOS", todos: todoResponse.data.reverse()})
+    if (todoResponse && todoResponse.isLoading === false && todoResponse.data) {
+      dispatch({ type: "FETCH_TODOS", todos: todoResponse.data.reverse() });
+    } 
+
+    if (!state.user) { //at initial load, or after Logout (no user? no todos)
+      dispatch({ type: "FETCH_TODOS", todos: "" });
     }
-  }, [todoResponse])
+  }, [todoResponse, state.user]);
 
   return (
     <div>
